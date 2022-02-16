@@ -1,5 +1,7 @@
 package astar;
 
+import java.util.OptionalInt;
+
 public class Board {
     int[][] nums;
 
@@ -64,5 +66,30 @@ public class Board {
             }
         }
         return ret.toString();
+    }
+
+    public OptionalInt[] squaresAround(Position pos) {
+        // 0 1 2
+        // 3   4
+        // 5 6 7
+        OptionalInt[] vals = new OptionalInt[8];
+        int i = 0;
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = -1; dy <= 1; dy++) {
+                if (dx != 0 || dy != 0) {
+                    int nx = pos.x + dx;
+                    int ny = pos.y + dy;
+                    if (ny >= 0 && ny < height()
+                            && nx >= 0 && nx < width()) {
+                        vals[i] = OptionalInt.of(get(nx, ny));
+                    } else {
+                        vals[i] = OptionalInt.empty();
+                    }
+                    i++;
+                }
+            }
+        }
+
+        return vals;
     }
 }

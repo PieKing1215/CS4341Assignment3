@@ -30,7 +30,7 @@ public class Search {
                 numExpanded++;
 
                 if (n.state.isValid()) {
-                    int newPriority = n.state.cost + heuristic.apply(n.state, goalPos);
+                    int newPriority = n.state.cost + heuristic.apply(n.state.pos, n.state.board.squaresAround(n.state.pos), n.state.facing, goalPos, n.state.board.squaresAround(goalPos));
                     IterState newState = new IterState(currentState.item, n.action == Action.DEMOLISH);
                     newState.append(n.state, n.action);
                     queue.add(new OrderedIterState(newState, newPriority));
