@@ -17,9 +17,11 @@ public class MainML {
             State startState = new State(start, Facing.UP, board, 0);
 
             long startTime = System.currentTimeMillis();
-            Search.Result result = Search.search(startState, goal, (Heuristics.all()).get(Integer.parseInt(args[1]) - 1));
+            Search.Result result = Search.search(startState, goal, Heuristics::heuristic5);
             long timeMs = System.currentTimeMillis() - startTime;
 
+            System.out.println(i%100);
+            /*
             System.out.println("GOAL REACHED:");
             System.out.println("pos = " + result.state.current.pos);
             System.out.println("facing = " + result.state.current.facing);
@@ -32,6 +34,8 @@ public class MainML {
             for (IterState.IterEntry previous : result.state.previous) {
                 System.out.println(previous.action);
             }
+            
+            */
         }
     }
 }
