@@ -16,9 +16,11 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String boardFile = args[0];
-        Board board = loadBoard(boardFile);
+        //String boardFile = args[0];
+    	//Board board = loadBoard(boardFile);
 
+    	Board board = loadBoard("C:\\Users\\Star Killer\\eclipse-workspace\\CS4341Assignment3\\res\\max_board.txt");
+    	
         Position start = board.find((byte) 83); // ascii S
         board.set(start, (byte) 1);
 
@@ -28,7 +30,7 @@ public class Main {
         State startState = new State((byte) start.x, (byte) start.y, Facing.UP, 0);
 
         long startTime = System.currentTimeMillis();
-        Search.Result result = Search.search(board, startState, goal, (Heuristics.all()).get(Integer.parseInt(args[1]) - 1));
+        Search.Result result = Search.search(board, startState, goal, (Heuristics::heuristic6));
         long timeMs = System.currentTimeMillis() - startTime;
 
         System.out.println("GOAL REACHED:");
