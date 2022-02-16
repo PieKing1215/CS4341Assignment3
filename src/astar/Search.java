@@ -4,7 +4,7 @@ import java.util.PriorityQueue;
 
 public class Search {
 
-    public static Result search(State startState, Position goalPos, Heuristic heuristic) {
+    public static Result search(Board board, State startState, Position goalPos, Heuristic heuristic) {
         PriorityQueue<OrderedIterState> queue = new PriorityQueue<>();
         queue.add(new OrderedIterState(new IterState(startState), startState.cost));
 
@@ -18,7 +18,7 @@ public class Search {
             if (currentState.item.current.pos.equals(goalPos))
                 break;
 
-            for (State.Neighbor n : currentState.item.current.getNeighborStates()) {
+            for (State.Neighbor n : currentState.item.current.getNeighborStates(board)) {
                 if (currentState.item.previous.size() > 0) {
                     Action prevAction = currentState.item.previous.get(currentState.item.previous.size() - 1).action;
                     if (prevAction == Action.TURN_LEFT && n.action == Action.TURN_RIGHT)
@@ -29,9 +29,9 @@ public class Search {
 
                 numExpanded++;
 
-                if (n.state.isValid()) {
-                    int newPriority = n.state.cost + heuristic.apply(n.state.pos, n.state.board.squaresAround(n.state.pos), n.state.facing, goalPos, n.state.board.squaresAround(goalPos));
-                    IterState newState = new IterState(currentState.item, n.action == Action.DEMOLISH);
+                if (n.state.isValid(board)) {
+                    int newPriority = n.state.cost + heuristic.apply(n.state.pos, board.squaresAround(n.state.pos), n.state.facing, goalPos, board.squaresAround(goalPos));
+                    IterState newState = new IterState(currentState.item);
                     newState.append(n.state, n.action);
                     queue.add(new OrderedIterState(newState, newPriority));
                 }

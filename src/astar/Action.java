@@ -4,23 +4,22 @@ public enum Action {
     FORWARD,
     TURN_LEFT,
     TURN_RIGHT,
-    BASH_FORWARD,
-    DEMOLISH;
+    BASH_FORWARD;
 
-    public State apply(State state) {
+    public State apply(State state, Board board) {
         State newState = null;
 
         switch (this) {
             case FORWARD:
-                newState = new State(state, false);
+                newState = new State(state);
                 newState.pos.x += state.facing.dx;
                 newState.pos.y += state.facing.dy;
-                if (newState.isValid()) {
-                    newState.cost += state.board.get(newState.pos);
+                if (newState.isValid(board)) {
+                    newState.cost += board.get(newState.pos);
                 }
                 break;
             case TURN_LEFT:
-                newState = new State(state, false);
+                newState = new State(state);
                 switch (state.facing) {
                     case UP:
                         newState.facing = Facing.LEFT;
@@ -36,12 +35,12 @@ public enum Action {
                         break;
                 }
 
-                if (newState.isValid()) {
-                    newState.cost += (int) Math.ceil(state.board.get(newState.pos) / 2.0);
+                if (newState.isValid(board)) {
+                    newState.cost += (int) Math.ceil(board.get(newState.pos) / 2.0);
                 }
                 break;
             case TURN_RIGHT:
-                newState = new State(state, false);
+                newState = new State(state);
                 switch (state.facing) {
                     case UP:
                         newState.facing = Facing.RIGHT;
@@ -57,33 +56,17 @@ public enum Action {
                         break;
                 }
 
-                if (newState.isValid()) {
-                    newState.cost += (int) Math.ceil(state.board.get(newState.pos) / 2.0);
+                if (newState.isValid(board)) {
+                    newState.cost += (int) Math.ceil(board.get(newState.pos) / 2.0);
                 }
                 break;
             case BASH_FORWARD:
-                newState = new State(state, false);
+                newState = new State(state);
                 newState.pos.x += state.facing.dx;
                 newState.pos.y += state.facing.dy;
                 newState.cost += 3;
-                if (newState.isValid()) {
-                    newState = Action.FORWARD.apply(newState);
-                }
-                break;
-            case DEMOLISH:
-                newState = new State(state, true);
-                newState.cost += 4;
-                for (int dx = -1; dx <= 1; dx++) {
-                    for (int dy = -1; dy <= 1; dy++) {
-                        if (dx != 0 || dy != 0) {
-                            int nx = newState.pos.x + dx;
-                            int ny = newState.pos.y + dy;
-                            if (ny >= 0 && ny < newState.board.height()
-                                    && nx >= 0 && nx < newState.board.width()) {
-                                newState.board.set(nx, ny, (byte) 3);
-                            }
-                        }
-                    }
+                if (newState.isValid(board)) {
+                    newState = Action.FORWARD.apply(newState, board);
                 }
                 break;
         }

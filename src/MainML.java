@@ -8,7 +8,7 @@ public class MainML {
         int maxIterations = 1000;
     	int percentage = 0;
     	for(int i = 0; i < maxIterations; i++) {
-            Board board = Board.generateRandomBoard(5, 5);
+            Board board = Board.generateRandomBoard(10, 10);
 
             Position start = board.find((byte) 83); // ascii S
             board.set(start, (byte) 1);
@@ -16,16 +16,18 @@ public class MainML {
             Position goal = board.find((byte) 71); // ascii G
             board.set(goal, (byte) 1);
 
-            State startState = new State(start, Facing.UP, board, 0);
+            State startState = new State(start, Facing.UP, 0);
 
             long startTime = System.currentTimeMillis();
-            Search.Result result = Search.search(startState, goal, Heuristics::heuristic5);
+            Search.Result result = Search.search(board, startState, goal, Heuristics::heuristic5);
             long timeMs = System.currentTimeMillis() - startTime;
 
             if(i % (maxIterations/100) == 0) {
             	System.out.println(percentage++ + "%");
             }
-            
+
+            System.gc();
+
             /*
             System.out.println("GOAL REACHED:");
             System.out.println("pos = " + result.state.current.pos);

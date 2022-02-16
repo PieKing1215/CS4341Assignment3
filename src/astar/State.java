@@ -6,30 +6,28 @@ import java.util.List;
 public class State {
     public Position pos;
     public Facing facing;
-    public Board board;
     public int cost;
 
-    public State(Position pos, Facing facing, Board board, int cost) {
+    public State(Position pos, Facing facing, int cost) {
         this.pos = pos;
         this.facing = facing;
-        this.board = board;
         this.cost = cost;
     }
 
-    public State(State copy, boolean copyBoard) {
-        this(new Position(copy.pos), copy.facing, copyBoard ? new Board(copy.board) : copy.board, copy.cost);
+    public State(State copy) {
+        this(new Position(copy.pos), copy.facing, copy.cost);
     }
 
-    public boolean isValid() {
-        return this.pos.x >= 0 && this.pos.x < this.board.width()
-                && this.pos.y >= 0 && this.pos.y < this.board.height();
+    public boolean isValid(Board board) {
+        return this.pos.x >= 0 && this.pos.x < board.width()
+                && this.pos.y >= 0 && this.pos.y < board.height();
     }
 
-    public List<Neighbor> getNeighborStates() {
+    public List<Neighbor> getNeighborStates(Board board) {
         List<Neighbor> ret = new ArrayList<>();
         for (Action action : Action.values()) {
-            State newState = action.apply(this);
-            if (newState.isValid()) {
+            State newState = action.apply(this, board);
+            if (newState.isValid(board)) {
                 ret.add(new Neighbor(action, newState));
             }
         }

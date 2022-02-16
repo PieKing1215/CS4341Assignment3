@@ -14,9 +14,9 @@ public class IterState {
         this.previous = new ArrayList<>();
     }
 
-    public IterState(IterState copy, boolean copyBoard) {
-        this.current = new State(copy.current, copyBoard);
-        this.previous = copy.previous.stream().map(e -> new IterEntry(e, copyBoard)).collect(Collectors.toList());
+    public IterState(IterState copy) {
+        this.current = new State(copy.current);
+        this.previous = copy.previous.stream().map(IterEntry::new).collect(Collectors.toList());
     }
 
     public void append(State state, Action action) {
@@ -33,8 +33,8 @@ public class IterState {
             this.action = action;
         }
 
-        public IterEntry(IterEntry copy, boolean copyBoard) {
-            this(new State(copy.state, copyBoard), copy.action);
+        public IterEntry(IterEntry copy) {
+            this(new State(copy.state), copy.action);
         }
     }
 }
