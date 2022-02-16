@@ -64,6 +64,6 @@ public class MainML {
             
         }
     	fileWriter.close();
-        System.out.println("GOAL REACHED:");
+        System.out.println("100% File outputted...");
     }
 }
