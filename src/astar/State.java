@@ -4,23 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class State {
-    public Position pos;
-    public Facing facing;
+    public byte x;
+    public byte y;
+    public byte facing;
     public int cost;
 
-    public State(Position pos, Facing facing, int cost) {
-        this.pos = pos;
+    public State(byte x, byte y, byte facing, int cost) {
+        this.x = x;
+        this.y = y;
         this.facing = facing;
         this.cost = cost;
     }
 
     public State(State copy) {
-        this(new Position(copy.pos), copy.facing, copy.cost);
+        this(copy.x, copy.y, copy.facing, copy.cost);
     }
 
     public boolean isValid(Board board) {
-        return this.pos.x >= 0 && this.pos.x < board.width()
-                && this.pos.y >= 0 && this.pos.y < board.height();
+        return this.x >= 0 && this.x < board.width()
+                && this.y >= 0 && this.y < board.height();
     }
 
     public List<Neighbor> getNeighborStates(Board board) {

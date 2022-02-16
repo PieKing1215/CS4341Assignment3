@@ -96,7 +96,7 @@ public class Board {
         return ret.toString();
     }
 
-    public OptionalInt[] squaresAround(Position pos) {
+    public OptionalInt[] squaresAround(byte x, byte y) {
         // 0 1 2
         // 3   4
         // 5 6 7
@@ -105,8 +105,8 @@ public class Board {
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = -1; dy <= 1; dy++) {
                 if (dx != 0 || dy != 0) {
-                    int nx = pos.x + dx;
-                    int ny = pos.y + dy;
+                    int nx = x + dx;
+                    int ny = y + dy;
                     if (ny >= 0 && ny < height()
                             && nx >= 0 && nx < width()) {
                         vals[i] = OptionalInt.of(get(nx, ny));
@@ -119,5 +119,9 @@ public class Board {
         }
 
         return vals;
+    }
+
+    public OptionalInt[] squaresAround(Position pos){
+        return squaresAround((byte) pos.x, (byte) pos.y);
     }
 }

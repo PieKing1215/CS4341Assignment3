@@ -25,14 +25,14 @@ public class Main {
         Position goal = board.find((byte) 71); // ascii G
         board.set(goal, (byte) 1);
 
-        State startState = new State(start, Facing.UP, 0);
+        State startState = new State((byte) start.x, (byte) start.y, Facing.UP, 0);
 
         long startTime = System.currentTimeMillis();
         Search.Result result = Search.search(board, startState, goal, (Heuristics.all()).get(Integer.parseInt(args[1]) - 1));
         long timeMs = System.currentTimeMillis() - startTime;
 
         System.out.println("GOAL REACHED:");
-        System.out.println("pos = " + result.state.current.pos);
+        System.out.println("pos = (" + result.state.current.x + ", " + result.state.current.y + ")");
         System.out.println("facing = " + result.state.current.facing);
         System.out.println("board = " + board);
         System.out.println("cost = " + result.state.current.cost);

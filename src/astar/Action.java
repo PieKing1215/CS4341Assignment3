@@ -10,65 +10,47 @@ public enum Action {
         State newState = null;
 
         switch (this) {
-            case FORWARD:
+            case FORWARD -> {
                 newState = new State(state);
-                newState.pos.x += state.facing.dx;
-                newState.pos.y += state.facing.dy;
+                newState.x += Facing.dx(state.facing);
+                newState.y += Facing.dy(state.facing);
                 if (newState.isValid(board)) {
-                    newState.cost += board.get(newState.pos);
+                    newState.cost += board.get(newState.x, newState.y);
                 }
-                break;
-            case TURN_LEFT:
+            }
+            case TURN_LEFT -> {
                 newState = new State(state);
                 switch (state.facing) {
-                    case UP:
-                        newState.facing = Facing.LEFT;
-                        break;
-                    case DOWN:
-                        newState.facing = Facing.RIGHT;
-                        break;
-                    case LEFT:
-                        newState.facing = Facing.DOWN;
-                        break;
-                    case RIGHT:
-                        newState.facing = Facing.UP;
-                        break;
+                    case Facing.UP -> newState.facing = Facing.LEFT;
+                    case Facing.DOWN -> newState.facing = Facing.RIGHT;
+                    case Facing.LEFT -> newState.facing = Facing.DOWN;
+                    case Facing.RIGHT -> newState.facing = Facing.UP;
                 }
-
                 if (newState.isValid(board)) {
-                    newState.cost += (int) Math.ceil(board.get(newState.pos) / 2.0);
+                    newState.cost += (int) Math.ceil(board.get(newState.x, newState.y) / 2.0);
                 }
-                break;
-            case TURN_RIGHT:
+            }
+            case TURN_RIGHT -> {
                 newState = new State(state);
                 switch (state.facing) {
-                    case UP:
-                        newState.facing = Facing.RIGHT;
-                        break;
-                    case DOWN:
-                        newState.facing = Facing.LEFT;
-                        break;
-                    case LEFT:
-                        newState.facing = Facing.UP;
-                        break;
-                    case RIGHT:
-                        newState.facing = Facing.DOWN;
-                        break;
+                    case Facing.UP -> newState.facing = Facing.RIGHT;
+                    case Facing.DOWN -> newState.facing = Facing.LEFT;
+                    case Facing.LEFT -> newState.facing = Facing.UP;
+                    case Facing.RIGHT -> newState.facing = Facing.DOWN;
                 }
-
                 if (newState.isValid(board)) {
-                    newState.cost += (int) Math.ceil(board.get(newState.pos) / 2.0);
+                    newState.cost += (int) Math.ceil(board.get(newState.x, newState.y) / 2.0);
                 }
-                break;
-            case BASH_FORWARD:
+            }
+            case BASH_FORWARD -> {
                 newState = new State(state);
-                newState.pos.x += state.facing.dx;
-                newState.pos.y += state.facing.dy;
+                newState.x += Facing.dx(state.facing);
+                newState.y += Facing.dy(state.facing);
                 newState.cost += 3;
                 if (newState.isValid(board)) {
                     newState = Action.FORWARD.apply(newState, board);
                 }
-                break;
+            }
         }
 
         return newState;

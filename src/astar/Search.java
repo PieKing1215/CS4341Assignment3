@@ -1,5 +1,6 @@
 package astar;
 
+import java.util.Iterator;
 import java.util.PriorityQueue;
 
 public class Search {
@@ -15,22 +16,40 @@ public class Search {
         while (!queue.isEmpty()) {
             currentState = queue.poll();
 
-            if (currentState.item.current.pos.equals(goalPos))
+            if (currentState.item.current.x == goalPos.x && currentState.item.current.y == goalPos.y)
                 break;
 
-            for (State.Neighbor n : currentState.item.current.getNeighborStates(board)) {
+            neighbor: for (State.Neighbor n : currentState.item.current.getNeighborStates(board)) {
                 if (currentState.item.previous.size() > 0) {
                     Action prevAction = currentState.item.previous.get(currentState.item.previous.size() - 1).action;
                     if (prevAction == Action.TURN_LEFT && n.action == Action.TURN_RIGHT)
                         continue;
                     if (prevAction == Action.TURN_RIGHT && n.action == Action.TURN_LEFT)
                         continue;
+
+                    for (IterState.IterEntry previous : currentState.item.previous) {
+                        if(previous.state.x == currentState.item.current.x
+                                && previous.state.y == currentState.item.current.y
+                                && previous.state.facing == currentState.item.current.facing
+                                && previous.state.cost <= currentState.item.current.cost) {
+                            continue neighbor;
+                        }
+                    }
+                }
+
+                for (OrderedIterState next : queue) {
+                    if (next.item.current.x == currentState.item.current.x
+                            && next.item.current.y == currentState.item.current.y
+                            && next.item.current.facing == currentState.item.current.facing
+                            && next.item.current.cost <= currentState.item.current.cost) {
+                        continue neighbor;
+                    }
                 }
 
                 numExpanded++;
 
                 if (n.state.isValid(board)) {
-                    int newPriority = n.state.cost + heuristic.apply(n.state.pos, board.squaresAround(n.state.pos), n.state.facing, goalPos, board.squaresAround(goalPos));
+                    int newPriority = n.state.cost + heuristic.apply(n.state.x, n.state.y, board.squaresAround(n.state.x, n.state.y), n.state.facing, goalPos, board.squaresAround(goalPos));
                     IterState newState = new IterState(currentState.item);
                     newState.append(n.state, n.action);
                     queue.add(new OrderedIterState(newState, newPriority));

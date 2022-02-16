@@ -15,8 +15,11 @@ public class IterState {
     }
 
     public IterState(IterState copy) {
-        this.current = new State(copy.current);
-        this.previous = copy.previous.stream().map(IterEntry::new).collect(Collectors.toList());
+        this.current = copy.current;
+        this.previous = new ArrayList<>();
+        for (IterEntry c : copy.previous) {
+            this.previous.add(new IterEntry(c));
+        }
     }
 
     public void append(State state, Action action) {

@@ -3,5 +3,5 @@ package astar;
 import java.util.OptionalInt;
 
 public interface Heuristic {
-    int apply(Position currentPos, OptionalInt[] squaresAroundCurrent, Facing facing, Position goalPos, OptionalInt[] squaresAroundGoal);
+    int apply(byte x, byte y, OptionalInt[] squaresAroundCurrent, byte facing, Position goalPos, OptionalInt[] squaresAroundGoal);
 }
