@@ -8,11 +8,11 @@ public class MainML {
         for(int i = 0; i < 1000; i++) {
             Board board = Board.generateRandomBoard(10, 10);
 
-            Position start = board.find(83); // ascii S
-            board.set(start, 1);
+            Position start = board.find((byte) 83); // ascii S
+            board.set(start, (byte) 1);
 
-            Position goal = board.find(71); // ascii G
-            board.set(goal, 1);
+            Position goal = board.find((byte) 71); // ascii G
+            board.set(goal, (byte) 1);
 
             State startState = new State(start, Facing.UP, board, 0);
 

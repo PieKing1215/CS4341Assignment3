@@ -19,11 +19,11 @@ public class Main {
         String boardFile = args[0];
         Board board = loadBoard(boardFile);
 
-        Position start = board.find(83); // ascii S
-        board.set(start, 1);
+        Position start = board.find((byte) 83); // ascii S
+        board.set(start, (byte) 1);
 
-        Position goal = board.find(71); // ascii G
-        board.set(goal, 1);
+        Position goal = board.find((byte) 71); // ascii G
+        board.set(goal, (byte) 1);
 
         State startState = new State(start, Facing.UP, board, 0);
 
@@ -50,23 +50,26 @@ public class Main {
         File file = new File(fName);
         BufferedReader br = new BufferedReader(new FileReader(file));
 
-        List<int[]> rows = new ArrayList<>();
+        List<byte[]> rows = new ArrayList<>();
         while (br.ready()) {
             String line = br.readLine();
-            int[] row = Arrays.stream(line.split("\t")).mapToInt(s -> {
-                if (s.equals("S")) {
-                    return 83;
-                } else if (s.equals("G")) {
-                    return 71;
+            String[] spl = line.split("\t");
+            byte[] row = new byte[spl.length];
+
+            for (int i = 0; i < row.length; i++){
+                if (spl[i].equals("S")) {
+                    row[i] = (byte) 83;
+                } else if (spl[i].equals("G")) {
+                    row[i] = (byte) 71;
                 } else {
-                    return Integer.parseInt(s);
+                    row[i] = Byte.parseByte(spl[i]);
                 }
-            }).toArray();
+            }
 
             rows.add(row);
         }
 
-        int[][] nums = rows.toArray(new int[rows.size()][]);
+        byte[][] nums = rows.toArray(new byte[rows.size()][]);
 
         return new Board(nums);
     }

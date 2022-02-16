@@ -4,19 +4,19 @@ import java.util.OptionalInt;
 import java.util.Random;
 
 public class Board {
-    int[][] nums;
+    byte[][] nums;
 
-    public Board(int[][] nums) {
+    public Board(byte[][] nums) {
         this.nums = nums;
     }
     
     public static Board generateRandomBoard(int rows, int cols) {
-    	int[][] boardArr = new int[rows][cols];
+        byte[][] boardArr = new byte[rows][cols];
     	Random rand = new Random();
     	for(int i = 0; i < rows; i++) {
     		for (int j = 0; j < cols; j++) {
     			
-    			boardArr[i][j] = rand.nextInt(1, 10);
+    			boardArr[i][j] = (byte) rand.nextInt(1, 10);
     			
     		}
     	}
@@ -41,8 +41,8 @@ public class Board {
         this(copy.cloneNums());
     }
 
-    int[][] cloneNums() {
-        int[][] newNums = new int[this.nums.length][];
+    byte[][] cloneNums() {
+        byte[][] newNums = new byte[this.nums.length][];
         for (int i = 0; i < newNums.length; i++) {
             newNums[i] = this.nums[i].clone();
         }
@@ -57,23 +57,23 @@ public class Board {
         return nums.length;
     }
 
-    public int get(int x, int y) {
+    public byte get(int x, int y) {
         return nums[y][x];
     }
 
-    public int get(Position pos) {
+    public byte get(Position pos) {
         return get(pos.x, pos.y);
     }
 
-    public void set(int x, int y, int v) {
+    public void set(int x, int y, byte v) {
         nums[y][x] = v;
     }
 
-    public void set(Position pos, int v) {
+    public void set(Position pos, byte v) {
         set(pos.x, pos.y, v);
     }
 
-    public Position find(int v) {
+    public Position find(byte v) {
         for (int y = 0; y < this.height(); y++) {
             for (int x = 0; x < this.width(); x++) {
                 if (get(x, y) == v) {

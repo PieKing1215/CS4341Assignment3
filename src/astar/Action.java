@@ -80,7 +80,7 @@ public enum Action {
                             int ny = newState.pos.y + dy;
                             if (ny >= 0 && ny < newState.board.height()
                                     && nx >= 0 && nx < newState.board.width()) {
-                                newState.board.set(nx, ny, 3);
+                                newState.board.set(nx, ny, (byte) 3);
                             }
                         }
                     }
