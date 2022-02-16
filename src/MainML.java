@@ -5,7 +5,9 @@ import java.io.IOException;
 public class MainML {
 
     public static void main(String[] args) throws IOException {
-        for(int i = 0; i < 1000; i++) {
+        int maxIterations = 1000;
+    	int percentage = 0;
+    	for(int i = 0; i < maxIterations; i++) {
             Board board = Board.generateRandomBoard(5, 5);
 
             Position start = board.find((byte) 83); // ascii S
@@ -20,8 +22,8 @@ public class MainML {
             Search.Result result = Search.search(startState, goal, Heuristics::heuristic5);
             long timeMs = System.currentTimeMillis() - startTime;
 
-            if(i % 100 == 0) {
-            	System.out.println("1");
+            if(i % (maxIterations/100) == 0) {
+            	System.out.println(percentage++ + "%");
             }
             
             /*
