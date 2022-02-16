@@ -29,7 +29,7 @@ public class Main {
         State startState = new State(start, Facing.UP, board, 0);
 
         long startTime = System.currentTimeMillis();
-        Search.Result result = Search.search(startState, goal, Heuristics::heuristic5);
+        Search.Result result = Search.search(startState, goal, (Heuristics.all()).get(Integer.parseInt(args[1]) - 1));
         long timeMs = System.currentTimeMillis() - startTime;
 
         System.out.println("GOAL REACHED:");
