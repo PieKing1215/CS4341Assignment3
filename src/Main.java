@@ -1,3 +1,11 @@
+import astar.Board;
+import astar.Facing;
+import astar.Heuristics;
+import astar.IterState;
+import astar.Position;
+import astar.Search;
+import astar.State;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

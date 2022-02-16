@@ -1,3 +1,5 @@
+package astar;
+
 public class Heuristics {
 
     public static int heuristic4(State state, Position goalPos) {

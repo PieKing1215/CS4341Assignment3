@@ -1,3 +1,5 @@
+package astar;
+
 public enum Action {
     FORWARD,
     TURN_LEFT,

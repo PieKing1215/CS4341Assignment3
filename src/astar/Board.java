@@ -1,3 +1,5 @@
+package astar;
+
 public class Board {
     int[][] nums;
 

@@ -1,11 +1,13 @@
+package astar;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 public class IterState {
-    State current;
-    List<IterEntry> previous;
+    public State current;
+    public List<IterEntry> previous;
 
     public IterState(State current) {
         this.current = current;
@@ -23,8 +25,8 @@ public class IterState {
     }
 
     public static class IterEntry {
-        State state;
-        Action action;
+        public State state;
+        public Action action;
 
         public IterEntry(State state, Action action) {
             this.state = state;

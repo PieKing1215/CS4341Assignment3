@@ -1,3 +1,5 @@
+package astar;
+
 public enum Facing {
     UP(0, -1),
     DOWN(0, 1),

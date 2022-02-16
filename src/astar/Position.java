@@ -1,3 +1,5 @@
+package astar;
+
 import java.util.Objects;
 
 public class Position {

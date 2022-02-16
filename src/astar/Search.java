@@ -1,3 +1,5 @@
+package astar;
+
 import java.util.PriorityQueue;
 
 public class Search {
@@ -55,9 +57,9 @@ public class Search {
         }
     }
 
-    static class Result {
-        IterState state;
-        int numExpanded;
+    public static class Result {
+        public IterState state;
+        public int numExpanded;
 
         public Result(IterState endState, int numExpanded) {
             this.state = endState;
