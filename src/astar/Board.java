@@ -1,12 +1,40 @@
 package astar;
 
 import java.util.OptionalInt;
+import java.util.Random;
 
 public class Board {
     int[][] nums;
 
     public Board(int[][] nums) {
         this.nums = nums;
+    }
+    
+    public static Board generateRandomBoard(int rows, int cols) {
+    	int[][] boardArr = new int[rows][cols];
+    	Random rand = new Random();
+    	for(int i = 0; i < rows; i++) {
+    		for (int j = 0; j < cols; j++) {
+    			
+    			boardArr[i][j] = rand.nextInt(1, 10);
+    			
+    		}
+    	}
+    	
+    	int startPosX = rand.nextInt(0, rows);
+    	int startPosY = rand.nextInt(0, cols);
+    	
+    	int goalPosX = rand.nextInt(0, rows);
+    	int goalPosY = rand.nextInt(0, cols);
+    	
+    	if(goalPosX == startPosX && goalPosY == startPosY) {
+    		return generateRandomBoard(rows, cols);
+    	}
+    	
+    	boardArr[startPosX][startPosY] = 83;
+    	boardArr[goalPosX][goalPosY] = 71;
+    	
+    	return new Board(boardArr);
     }
 
     public Board(Board copy) {

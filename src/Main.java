@@ -16,8 +16,9 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String boardFile = args[0];
-        Board board = loadBoard(boardFile);
+        //String boardFile = args[0];
+        //Board board = loadBoard(boardFile);
+    	Board board = Board.generateRandomBoard(10,10);
 
         Position start = board.find(83); // ascii S
         board.set(start, 1);
