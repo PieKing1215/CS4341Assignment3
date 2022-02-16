@@ -58,7 +58,7 @@ public class MainML {
             	int distanceX = Math.abs(previous.state.x - goal.x);
             	int distanceY = Math.abs(previous.state.y - goal.y);
             	double linearDistance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-            	fileWriter.write(previous.action + "," + distanceX  + "," + distanceY + "," + linearDistance + ", " + previous.state.cost + ",\n");
+            	fileWriter.write(previous.action + "," + distanceX  + "," + distanceY + "," + linearDistance + ", " + (result.state.current.cost - previous.state.cost) + ",\n");
             }
             fileWriter.write(line.toString());
             
