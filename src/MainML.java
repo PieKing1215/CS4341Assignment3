@@ -6,7 +6,7 @@ public class MainML {
 
     public static void main(String[] args) throws IOException {
         for(int i = 0; i < 1000; i++) {
-            Board board = Board.generateRandomBoard(10, 10);
+            Board board = Board.generateRandomBoard(5, 5);
 
             Position start = board.find((byte) 83); // ascii S
             board.set(start, (byte) 1);
@@ -20,7 +20,10 @@ public class MainML {
             Search.Result result = Search.search(startState, goal, Heuristics::heuristic5);
             long timeMs = System.currentTimeMillis() - startTime;
 
-            System.out.println(i%100);
+            if(i % 100 == 0) {
+            	System.out.println("1");
+            }
+            
             /*
             System.out.println("GOAL REACHED:");
             System.out.println("pos = " + result.state.current.pos);
@@ -37,5 +40,6 @@ public class MainML {
             
             */
         }
+        System.out.println("GOAL REACHED:");
     }
 }
