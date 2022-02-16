@@ -48,8 +48,9 @@ public class Heuristics {
     }
 
     public static int heuristic7(byte x, byte y, OptionalInt[] squaresAroundCurrent, byte facing, Position goalPos, OptionalInt[] squaresAroundGoal) {
-        // TODO
-        return 0;
+    	int[] distances = calcDistances(x, y, goalPos);
+    	
+        return (int) ((2.9301 * distances[0]) + (2.9496 * distances[1]) - 1.0377);
     }
 
     public static int[] calcDistances(byte x, byte y, Position goalPos) {

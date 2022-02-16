@@ -22,7 +22,7 @@ public class MainML {
     	
     	for(int i = 0; i < maxIterations; i++) {
     		StringBuilder line = new StringBuilder();
-            Board board = Board.generateRandomBoard(15, 15);
+            Board board = Board.generateRandomBoard(10, 10);
 
             Position start = board.find((byte) 83); // ascii S
             board.set(start, (byte) 1);
@@ -57,8 +57,9 @@ public class MainML {
             for (IterState.IterEntry previous : result.state.previous) {
             	int distanceX = Math.abs(previous.state.x - goal.x);
             	int distanceY = Math.abs(previous.state.y - goal.y);
+            	int cost = Math.abs(result.state.current.cost - previous.state.cost);
             	double linearDistance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-            	fileWriter.write(previous.action + "," + distanceX  + "," + distanceY + "," + linearDistance + ", " + (result.state.current.cost - previous.state.cost) + ",\n");
+            	fileWriter.write(previous.action + "," + distanceX  + "," + distanceY + "," + linearDistance + ", " + cost + ",\n");
             }
             fileWriter.write(line.toString());
             
