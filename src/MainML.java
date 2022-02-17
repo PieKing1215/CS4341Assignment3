@@ -15,12 +15,13 @@ public class MainML {
     public static void main(String[] args) throws IOException {
         int maxIterations = 10000;
     	int percentage = 0;
-    	File csvFile = new File("test.csv");
+    	File csvFile = new File("data.csv");
     	FileWriter fileWriter = new FileWriter(csvFile);
     	
-    	fileWriter.write("State," + "X Distance," + "Y Distance," + "Linear Distance," + "Cost\n");
+    	fileWriter.write("State," + "X Distance," + "Y Distance," + "Linear Distance," + "Manhatten Cost," + "Cost\n");
+    	float overallTime = 0;
     	
-    	for(int i = 0; i < maxIterations; i++) {
+    	for(int i = 1; i < maxIterations+1; i++) {
     		StringBuilder line = new StringBuilder();
             Board board = Board.generateRandomBoard(10, 10);
 
@@ -35,31 +36,21 @@ public class MainML {
             long startTime = System.currentTimeMillis();
             Search.Result result = Search.search(board, startState, goal, Heuristics::heuristic5);
             long timeMs = System.currentTimeMillis() - startTime;
-
+            float timeSec = (float)timeMs/1000;
+            overallTime += (timeSec);
             if(i % (maxIterations/100) == 0) {
-            	System.out.println(percentage++ + "%");
+            	System.out.println(percentage++ + "%  ---- Current Time Taken : " + overallTime + " seconds   ---- Remaining Time : " + (((overallTime/i)*maxIterations)-overallTime) + " seconds");
             }
             System.gc();
-            /*
-            System.out.println("GOAL REACHED:");
-            System.out.println("pos = " + result.state.current.pos);
-            System.out.println("facing = " + result.state.current.facing);
-            System.out.println("board = " + result.state.current.board);
-            System.out.println("cost = " + result.state.current.cost);
-            System.out.println("# moves = " + result.state.previous.size());
-            System.out.println("# expanded = " + result.numExpanded);
-            System.out.println("time = " + timeMs + "ms");
-            System.out.println("ACTIONS TAKEN:");
-            */
-           //fileWriter.write(result.state.current.cost + ",");
-           //fileWriter.write(result.numExpanded + ",");
-           //fileWriter.write(timeMs + ",");
+            
             for (IterState.IterEntry previous : result.state.previous) {
             	int distanceX = Math.abs(previous.state.x - goal.x);
             	int distanceY = Math.abs(previous.state.y - goal.y);
             	int cost = Math.abs(result.state.current.cost - previous.state.cost);
             	double linearDistance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-            	fileWriter.write(previous.action + "," + distanceX  + "," + distanceY + "," + linearDistance + ", " + cost + ",\n");
+            	double manhattanCost = (distanceX + distanceY);
+            	
+            	fileWriter.write(previous.action + "," + distanceX  + "," + distanceY + "," + linearDistance + ","+ manhattanCost + "," + cost + ",\n");
             }
             fileWriter.write(line.toString());
             
