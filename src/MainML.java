@@ -13,7 +13,7 @@ import astar.State;
 public class MainML {
 
     public static void main(String[] args) throws IOException {
-        int maxIterations = 10000;
+        int maxIterations = 720;
     	int percentage = 0;
     	File csvFile = new File("data.csv");
     	FileWriter fileWriter = new FileWriter(csvFile);
@@ -23,7 +23,7 @@ public class MainML {
     	
     	for(int i = 1; i < maxIterations+1; i++) {
     		StringBuilder line = new StringBuilder();
-            Board board = Board.generateRandomBoard(10, 10);
+            Board board = Board.generateRandomBoard(30, 30);
 
             Position start = board.find((byte) 83); // ascii S
             board.set(start, (byte) 1);
@@ -47,8 +47,8 @@ public class MainML {
             	int distanceX = Math.abs(previous.state.x - goal.x);
             	int distanceY = Math.abs(previous.state.y - goal.y);
             	int cost = Math.abs(result.state.current.cost - previous.state.cost);
-            	double linearDistance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-            	double manhattanCost = (distanceX + distanceY);
+            	float linearDistance = (float)Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+            	float manhattanCost = (float)(distanceX + distanceY);
             	
             	fileWriter.write(previous.action + "," + distanceX  + "," + distanceY + "," + linearDistance + ","+ manhattanCost + "," + cost + ",\n");
             }
