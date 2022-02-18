@@ -7,5 +7,5 @@ Our machine-learned heuristic is run when the program is given a “7”.
 
 
 ### Analysis/Writeup:
-Our analysis and writeup can be found here: https://docs.google.com/document/d/1TOy_0h5-aeW2qbcFHEjy1BDlHcgbV6KWIhgDXDZihbY/edit#
+[Our analysis and writeup can be found here.](https://docs.google.com/document/d/1TOy_0h5-aeW2qbcFHEjy1BDlHcgbV6KWIhgDXDZihbY/edit#)
 
