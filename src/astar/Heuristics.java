@@ -49,8 +49,9 @@ public class Heuristics {
 
     public static int heuristic7(byte x, byte y, OptionalInt[] squaresAroundCurrent, byte facing, Position goalPos, OptionalInt[] squaresAroundGoal) {
     	int[] distances = calcDistances(x, y, goalPos);
+        float linearDistance = (float)Math.sqrt(distances[0] * distances[0] + distances[1] * distances[1]);
     	
-        return (int) ((2.9301 * distances[0]) + (2.9496 * distances[1]) - 1.0377);
+        return (int) (1.9212 * distances[0] + 1.8894 * distances[1] + 1.0937 * linearDistance - 0.7916);
     }
 
     public static int[] calcDistances(byte x, byte y, Position goalPos) {
